@@ -8,15 +8,21 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    private static final String MUTZO = "tag";
+
     Bitmap bitmap;
     Drawable drawable;
+
+    Circles c1 = new Circles(50f,425.2f, 0.80f);
+    Circles c2 = new Circles(1200f,535f, 0.10f);
+    Circles c3 = new Circles(320f,50.2f, 0.50f);
+    List<Circles> circle = new ArrayList<>();
+
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +32,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class MyView extends View {
-        int radius = 50;
+
+
+        int radius = 30;
         public MyView(Context context) {
             super(context);
             // TODO Auto-generated constructor stub
+            circle.add(c1);
+            circle.add(c2);
+            circle.add(c3);
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
+
             // TODO Auto-generated method stub
             super.onDraw(canvas);
 
@@ -41,20 +53,17 @@ public class MainActivity extends AppCompatActivity {
             bitmap = ((BitmapDrawable) drawable).getBitmap();
             int x = getWidth();
             int y = getHeight();
-
-
             Paint paint = new Paint();
             paint.setStyle(Paint.Style.FILL);
-            int color = Colours.getColor(0.8f);
-            Log.d(MUTZO, "Color: " + color);
-
-            paint.setColor(color);
-            paint.setAlpha(100);
-
-
-            drawable.setBounds(0,0,x,y);
+            drawable.setBounds(0, 0, x, y);
             drawable.draw(canvas);
-            canvas.drawCircle(34, 200, radius, paint);
+
+            for (Circles c : circle) {
+                paint.setColor(Colours.getColor(c.getSound_Level()));
+                paint.setAlpha(100);
+                canvas.drawCircle(c.getX(), c.getY(), radius, paint);
+            }
+
 
         }
     }

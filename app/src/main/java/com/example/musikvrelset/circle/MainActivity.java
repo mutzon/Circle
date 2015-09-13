@@ -11,17 +11,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
     private static final String MUTZO = "tag";
     Bitmap bitmap;
     Drawable drawable;
+    Circle c1 = new Circle(50f,425.5f,0.80f);
+    Circle c2 = new Circle(1200f,535.5f,0.10f);
+    Circle c3 = new Circle(320f,50f,0.50f);
+    List<Circle> circle = new ArrayList<>();
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(new MyView(this));
+
 
     }
 
@@ -30,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         public MyView(Context context) {
             super(context);
             // TODO Auto-generated constructor stub
+
+            circle.add(c1);
+            circle.add(c2);
+            circle.add(c3);
+
         }
 
         @Override
@@ -52,8 +64,16 @@ public class MainActivity extends AppCompatActivity {
             paint.setAlpha(100);
 
 
-            drawable.setBounds(0,0,x,y);
+            drawable.setBounds(0, 0, x, y);
             drawable.draw(canvas);
+
+            for (Circle c : circle)  {
+                paint.setColor(Colours.getColor(c.getSound_level()));
+                paint.setAlpha(100);
+                canvas.drawCircle(c.getX(),c.getY(),radius,paint);
+
+            }
+
             canvas.drawCircle(34, 200, radius, paint);
 
         }
